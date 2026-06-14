@@ -1,0 +1,1841 @@
+<!doctype html>
+<html lang="ru" class="no-scroll">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Dias & Shapagat - 08.08.2026</title>
+    <link rel="preload" href="main.jpg" as="image" />
+    <link rel="preload" href="flowers-corner.png" as="image" />
+    <link rel="preload" href="flowers-single.png" as="image" />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Great+Vibes&family=Cinzel:wght@400;500;600;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Bad+Script&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap"
+            rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-weight: 700 !important;
+
+        }
+        html {
+            -webkit-tap-highlight-color: transparent;
+        }
+        html.no-scroll,
+        html.no-scroll body {
+            overflow: hidden;
+            height: 100%;
+        }
+        body {
+            background: #f7f3ec;
+            font-family: "Cormorant Garamond", serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            color: #2a2a2a;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .lang {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 500;
+            display: flex;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(247, 243, 236, 0.9);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+        .lang button {
+            padding: 7px 16px;
+            background: 0;
+            border: 0;
+            font:
+                    600 0.5rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 2px;
+            color: #3a5a28;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .lang button.on {
+            background: #3a5a28;
+            color: #f7f3ec;
+        }
+
+        /* =========== SINGLE PAGE LAYOUT =========== */
+        .page-wrap {
+            background: #f7f3ec;
+            overflow-x: hidden;
+        }
+
+        /* Initial centered view — envelope centered on screen */
+        .initial-view {
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .greet {
+            text-align: center;
+            margin-bottom: 8px;
+            opacity: 0;
+        }
+        .greet-name {
+            font:
+                    400 clamp(1.3rem, 4.5vw, 1.7rem)/1.3 "Great Vibes",
+                    cursive;
+            color: #3a5a28;
+        }
+        .greet-sub {
+            font:
+                    500 0.55rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #a8a090;
+            margin-top: 4px;
+        }
+
+        .hint {
+            font:
+                    700 0.7rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #3a5a28;
+            margin-top: 20px;
+            text-shadow: 0 2px 8px rgba(58, 90, 40, 0.35);
+            opacity: 0;
+        }
+
+        /* =========== ENVELOPE CONTAINER =========== */
+        .env-container {
+            position: relative;
+            width: clamp(280px, 88vw, 420px);
+            max-width: calc(100vw - 40px);
+            cursor: pointer;
+        }
+
+        /* The closed envelope — 4 folds meeting at center */
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: clamp(200px, 56vw, 270px);
+            z-index: 10;
+        }
+        .env-body {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(170deg, #556b2f, #4a5e28 40%, #3d4f22);
+            border-radius: 6px;
+            box-shadow:
+                    0 20px 60px rgba(0, 0, 0, 0.15),
+                    0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+        /* Left fold — triangle from left edge to center */
+        .env-fold-l {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            background: linear-gradient(90deg, #5c7a35, #4e6330);
+            clip-path: polygon(0 0, 0 100%, 100% 50%);
+            z-index: 4;
+        }
+        /* Right fold */
+        .env-fold-r {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            background: linear-gradient(-90deg, #5c7a35, #4e6330);
+            clip-path: polygon(100% 0, 100% 100%, 0 50%);
+            z-index: 4;
+        }
+        /* Bottom fold */
+        .env-fold-b {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 55%;
+            background: linear-gradient(0deg, #3d4f22, #4e6330);
+            clip-path: polygon(0 100%, 100% 100%, 50% 0);
+            z-index: 5;
+        }
+        /* Top flap — will open */
+        .env-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 55%;
+            background: linear-gradient(180deg, #3d4f22, #4e6330);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            z-index: 6;
+            transform-origin: top center;
+        }
+        /* Card peeking inside */
+        .env-inner-card {
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            top: 14%;
+            bottom: 12%;
+            background: #fffdf8;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+        .env-pv {
+            text-align: center;
+            padding: 16px;
+        }
+        .env-pv-tag {
+            font:
+                    italic 400 0.5rem/1 "Cormorant Garamond",
+                    serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #a8a090;
+            margin-bottom: 6px;
+        }
+        .env-pv-names {
+            font:
+                    400 clamp(1.1rem, 3.2vw, 1.5rem)/1.2 "Great Vibes",
+                    cursive;
+            color: #3a5a28;
+        }
+        .env-pv-date {
+            font:
+                    500 0.6rem/1 "Cormorant SC",
+                    serif;
+            color: #8a7a5a;
+            letter-spacing: 5px;
+            margin-top: 8px;
+        }
+
+        /* Seal — dead center of envelope */
+        .env-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 8;
+        }
+
+        /* Clean coin-like wax seal */
+        .wax-seal {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            position: relative;
+            background: radial-gradient(
+                    circle at 38% 32%,
+                    #faf8f4,
+                    #ede9e0 45%,
+                    #ddd8cc 75%,
+                    #cfc8bc
+            );
+            box-shadow:
+                    0 2px 5px rgba(0, 0, 0, 0.15),
+                    0 5px 14px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+                    inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .wax-seal::before {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            border: 1px solid rgba(170, 160, 145, 0.2);
+        }
+        .wax-seal::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            width: 55%;
+            height: 35%;
+            border-radius: 50%;
+            background: linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.4),
+                    transparent
+            );
+            pointer-events: none;
+        }
+        .wax-seal-letters {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wax-seal-dm {
+            position: relative;
+            width: 28px;
+            height: 26px;
+        }
+        .wax-seal-dm .wd {
+            position: absolute;
+            font:
+                    400 1.5rem/1 "Great Vibes",
+                    cursive;
+            color: #2a3a1e;
+            top: -2px;
+            left: 1px;
+        }
+        .wax-seal-dm .wm {
+            position: absolute;
+            font:
+                    400 1.2rem/1 "Great Vibes",
+                    cursive;
+            color: #2a3a1e;
+            bottom: -1px;
+            right: 0;
+        }
+
+        /* Flowers on closed envelope */
+        .env-fl {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.1));
+        }
+        .env-fl img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .env-fl-tl {
+            top: -36px;
+            left: -30px;
+            width: clamp(110px, 30vw, 140px);
+            height: clamp(110px, 30vw, 140px);
+            transform: rotate(-10deg);
+            opacity: 0;
+        }
+        .env-fl-br {
+            bottom: -30px;
+            right: -26px;
+            width: clamp(105px, 28vw, 135px);
+            height: clamp(105px, 28vw, 135px);
+            transform: rotate(170deg);
+            opacity: 0;
+        }
+
+        /* =========== REVEALED CONTENT (hidden initially) =========== */
+        .revealed {
+            display: none;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 50px 16px 0;
+            overflow: hidden;
+        }
+        .revealed.show {
+            display: block;
+        }
+
+        .composed {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Card — sits behind envelope folds, narrower than envelope */
+        .card-outer {
+            position: relative;
+            z-index: 2;
+            width: 88%;
+            max-width: 360px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #d5d0c5, #ccc7bb);
+            border-radius: 6px;
+            padding: 5px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.06);
+            transform: rotate(-1deg);
+        }
+        .card {
+            background: #fffdf8;
+            border-radius: 4px;
+            padding: 22px 18px 18px;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 11px;
+            background: radial-gradient(
+                    circle 4.5px at 9px 0,
+                    transparent 4px,
+                    #d5d0c5 4.5px,
+                    #d5d0c5 5px,
+                    transparent 5.5px
+            );
+            background-size: 18px 11px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .card::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 11px;
+            background: radial-gradient(
+                    circle 4.5px at 9px 11px,
+                    transparent 4px,
+                    #d5d0c5 4.5px,
+                    #d5d0c5 5px,
+                    transparent 5.5px
+            );
+            background-size: 18px 11px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .card-lace-l {
+            position: absolute;
+            left: -1px;
+            top: 0;
+            bottom: 0;
+            width: 11px;
+            background: radial-gradient(
+                    circle 4.5px at 0 9px,
+                    transparent 4px,
+                    #d5d0c5 4.5px,
+                    #d5d0c5 5px,
+                    transparent 5.5px
+            );
+            background-size: 11px 18px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .card-lace-r {
+            position: absolute;
+            right: -1px;
+            top: 0;
+            bottom: 0;
+            width: 11px;
+            background: radial-gradient(
+                    circle 4.5px at 11px 9px,
+                    transparent 4px,
+                    #d5d0c5 4.5px,
+                    #d5d0c5 5px,
+                    transparent 5.5px
+            );
+            background-size: 11px 18px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .card-fl {
+            position: absolute;
+            pointer-events: none;
+            z-index: 3;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.06));
+        }
+        .card-fl img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .card-fl-tr {
+            top: -22px;
+            right: -40px;
+            width: clamp(80px, 22vw, 100px);
+            height: clamp(80px, 22vw, 100px);
+        }
+        .card-fl-bl {
+            bottom: -16px;
+            left: -16px;
+            width: clamp(75px, 20vw, 95px);
+            height: clamp(75px, 20vw, 95px);
+            transform: rotate(180deg);
+        }
+
+        .c-save { display: none; }
+        .c-the { display: none; }
+        .c-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px auto;
+            position: relative;
+            z-index: 2;
+        }
+        .c-orn-line {
+            width: 36px;
+            height: 1px;
+            background: rgba(58, 90, 40, 0.15);
+        }
+        .c-orn-diamond {
+            width: 4px;
+            height: 4px;
+            background: rgba(58, 90, 40, 0.2);
+            transform: rotate(45deg);
+        }
+        .c-for {
+            font:
+                    400 clamp(1.05rem, 3.5vw, 1.35rem)/1.3 "Great Vibes",
+                    cursive;
+            color: #3a5a28;
+            margin: 0 0 2px;
+            position: relative;
+            z-index: 2;
+        }
+        .c-date {
+            font:
+                    700 clamp(1.15rem, 4vw, 1.55rem)/1.1 "Playfair Display",
+                    serif;
+            color: #1a1a1a;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 2px 0;
+            position: relative;
+            z-index: 2;
+        }
+        .c-names {
+            font:
+                    400 clamp(1.4rem, 5vw, 2rem)/1.15 "Great Vibes",
+                    cursive;
+            color: #3a5a28;
+            margin: 2px 0 0;
+            position: relative;
+            z-index: 2;
+        }
+        .c-names .amp {
+            font-size: 0.45em;
+            font-family: "Cormorant Garamond", serif;
+            font-style: italic;
+            color: #c0b8a8;
+            display: inline;
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+
+        .card-media {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .card-photo {
+            background: #fff;
+            padding: 4px 4px 14px;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+            border-radius: 2px;
+            display: inline-block;
+            transform: rotate(-2deg);
+            flex-shrink: 0;
+        }
+        .card-photo img {
+            width: clamp(110px, 32vw, 170px);
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            display: block;
+            border-radius: 1px;
+        }
+
+        .vinyl-wrap {
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+        .vinyl-player {
+            position: relative;
+            width: clamp(90px, 26vw, 120px);
+            height: clamp(90px, 26vw, 120px);
+            cursor: pointer;
+        }
+        .vinyl-disc {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            animation: vinyl-pulse 2s ease-in-out infinite;
+        }
+        .vinyl-disc.spin {
+            animation: sp 1.8s linear infinite;
+        }
+        @keyframes vinyl-pulse {
+            0%,
+            100% {
+                box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow:
+                        0 4px 18px rgba(0, 0, 0, 0.3),
+                        0 0 16px rgba(200, 172, 90, 0.35);
+            }
+        }
+        .vinyl-disc canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        .vinyl-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28%;
+            height: 28%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 38%, #6a8a50, #3a5a28);
+            box-shadow:
+                    inset 0 2px 3px rgba(255, 255, 255, 0.12),
+                    0 1px 3px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .vinyl-center::after {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #c8b880, #a89060);
+        }
+        .vinyl-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.88);
+            border: none;
+            cursor: pointer;
+            z-index: 12;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, background 0.2s;
+            pointer-events: auto;
+        }
+        .vinyl-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .vinyl-btn:active {
+            transform: translate(-50%, -50%) scale(0.92);
+        }
+        .vinyl-btn .play-icon {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 4px 0 4px 7px;
+            border-color: transparent transparent transparent #3a5a28;
+            margin-left: 1.5px;
+        }
+        .vinyl-btn .pause-icon {
+            display: none;
+            gap: 2px;
+        }
+        .vinyl-btn .pause-icon span {
+            width: 2.5px;
+            height: 9px;
+            background: #3a5a28;
+            border-radius: 0.5px;
+        }
+        .vinyl-btn.is-playing .play-icon {
+            display: none;
+        }
+        .vinyl-btn.is-playing .pause-icon {
+            display: flex;
+        }
+        .vinyl-svg-text {
+            position: absolute;
+            inset: -4px;
+            pointer-events: none;
+        }
+        .vinyl-svg-text svg {
+            width: 100%;
+            height: 100%;
+        }
+        .vinyl-svg-text text {
+            font:
+                    700 0.32rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            fill: #ddd;
+        }
+        @keyframes sp {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Open envelope — only 3 equal triangles, no background rectangle */
+        .open-env {
+            position: relative;
+            z-index: 6;
+            width: 96%;
+            max-width: 420px;
+            margin: -140px auto 0;
+            aspect-ratio: 1.5/1;
+            pointer-events: none;
+        }
+        /* No oe-body background — just the 3 triangles */
+        .oe-body {
+            display: none;
+        }
+        /* Left fold — triangle pointing right toward center */
+        .oe-fold-l {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(90deg, #5a7533, #4e6830);
+            clip-path: polygon(0 0, 0 100%, 100% 50%);
+            filter: drop-shadow(3px 0 4px rgba(0, 0, 0, 0.12));
+        }
+        /* Right fold — triangle pointing left toward center */
+        .oe-fold-r {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(-90deg, #5a7533, #4e6830);
+            clip-path: polygon(100% 0, 100% 100%, 0 50%);
+            filter: drop-shadow(-3px 0 4px rgba(0, 0, 0, 0.12));
+        }
+        /* Bottom fold — triangle pointing up toward center */
+        .oe-fold-b {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(0deg, #3d4f22, #4a5e28);
+            clip-path: polygon(0 100%, 100% 100%, 50% 0);
+            z-index: 2;
+            filter: drop-shadow(0 -3px 4px rgba(0, 0, 0, 0.12));
+        }
+
+        /* Seal — dead center of envelope */
+        .oe-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 8;
+        }
+        .oe-seal .wax-seal {
+            width: 50px;
+            height: 50px;
+        }
+        .oe-seal .wax-seal-dm .wd {
+            font-size: 1.3rem;
+        }
+        .oe-seal .wax-seal-dm .wm {
+            font-size: 1.05rem;
+        }
+
+        /* Scene flowers */
+        .sc-fl {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.07));
+        }
+        .sc-fl img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .sc-fl-left {
+            left: clamp(-28px, -8vw, -36px);
+            top: clamp(30%, 38%, 42%);
+            width: clamp(95px, 26vw, 125px);
+            height: clamp(95px, 26vw, 125px);
+            transform: rotate(-12deg);
+        }
+        .sc-fl-bottom {
+            right: clamp(10px, 5vw, 30px);
+            bottom: clamp(-30px, -8vw, -40px);
+            width: clamp(90px, 24vw, 115px);
+            height: clamp(90px, 24vw, 115px);
+            transform: rotate(5deg);
+        }
+
+        /* Personal invitation section */
+        .invitation-section {
+            max-width: 380px;
+            margin: 32px auto 0;
+            padding: 0 24px;
+            text-align: center;
+        }
+        .inv-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .inv-orn-line {
+            width: 40px;
+            height: 1px;
+            background: rgba(58, 90, 40, 0.15);
+        }
+        .inv-orn-leaf {
+            font-size: 0.7rem;
+            color: #3a5a28;
+            opacity: 0.4;
+        }
+        .inv-text {
+            font:
+                italic 500 clamp(1.15rem, 3vw, 1.35rem)/1.8 "Cormorant Garamond", serif;
+            color: #5a5348;
+            margin-bottom: 24px;
+        }
+        .inv-details {
+            background: #fffdf8;
+            border-radius: 8px;
+            padding: 24px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(58, 90, 40, 0.08);
+        }
+        .inv-detail-row {
+            margin-bottom: 16px;
+        }
+        .inv-detail-row:last-child {
+            margin-bottom: 0;
+        }
+        .inv-detail-label {
+            font:
+                    600 0.5rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #3a5a28;
+            opacity: 0.5;
+            margin-bottom: 6px;
+        }
+        .inv-detail-value {
+            font:
+                    500 clamp(1rem, 3vw, 1.2rem)/1.4 "Cormorant SC",
+                    serif;
+            color: #2a2a2a;
+            letter-spacing: 2px;
+        }
+        .inv-detail-sub {
+            font:
+                    italic 400 clamp(0.8rem, 2vw, 0.9rem)/1.4 "Cormorant Garamond",
+                    serif;
+            color: #8a7a5a;
+            margin-top: 2px;
+        }
+        .inv-venue-link {
+            display: inline-block;
+            margin-top: 8px;
+            font:
+                    500 0.55rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 2px;
+            color: #3a5a28;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(58, 90, 40, 0.2);
+            padding-bottom: 1px;
+            transition: 0.3s;
+        }
+        .inv-venue-link:hover {
+            border-color: #3a5a28;
+        }
+        .inv-schedule {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fffdf8;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(58, 90, 40, 0.08);
+        }
+        .schedule-items {
+            margin-top: 14px;
+        }
+        .schedule-item {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(58, 90, 40, 0.06);
+        }
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+        .schedule-time {
+            font:
+                    600 clamp(0.82rem, 2.2vw, 0.95rem)/1 "Playfair Display",
+                    serif;
+            color: #3a5a28;
+            flex-shrink: 0;
+            width: 50px;
+        }
+        .schedule-desc {
+            font:
+                    400 clamp(0.8rem, 2.2vw, 0.92rem)/1.4 "Cormorant Garamond",
+                    serif;
+            color: #5a5348;
+            flex: 1;
+        }
+        .schedule-note {
+            margin-top: 12px;
+            font:
+                    italic 400 clamp(0.72rem, 1.8vw, 0.82rem)/1.5 "Cormorant Garamond",
+                    serif;
+            color: #a8a090;
+            text-align: center;
+        }
+        .inv-afterparty {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fffdf8;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(58, 90, 40, 0.08);
+            text-align: center;
+        }
+        .inv-afterparty .inv-detail-sub {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .inv-divider {
+            width: 24px;
+            height: 1px;
+            background: rgba(58, 90, 40, 0.1);
+            margin: 0 auto 16px;
+        }
+
+        /* Photo story section */
+        .photo-story {
+            max-width: 400px;
+            margin: 36px auto 0;
+            padding: 0 16px;
+        }
+        .ps-label {
+            text-align: center;
+            font:
+                    600 0.45rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #3a5a28;
+            opacity: 0.35;
+            margin-bottom: 20px;
+        }
+
+        /* Polaroid frame */
+        .polaroid {
+            background: #fff;
+            padding: 6px 6px 10px;
+            box-shadow:
+                    0 4px 20px rgba(0, 0, 0, 0.08),
+                    0 1px 4px rgba(0, 0, 0, 0.04);
+            border-radius: 2px;
+            position: relative;
+        }
+        .polaroid img {
+            width: 100%;
+            display: block;
+            border-radius: 1px;
+        }
+        .polaroid-caption {
+            position: relative;
+            padding: 10px 6px 2px;
+            text-align: center;
+            font:
+                    italic 400 0.72rem/1.4 "Cormorant Garamond",
+                    serif;
+            color: #5a5348;
+            letter-spacing: 0.3px;
+        }
+        .ps-triple .polaroid-caption {
+            font-size: 0.52rem;
+            line-height: 1.3;
+            padding: 6px 3px 2px;
+        }
+
+        /* Row layouts */
+        .ps-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        .ps-row .polaroid {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Hero — single big polaroid */
+        .ps-hero {
+            margin-bottom: 14px;
+        }
+        .ps-hero .polaroid {
+            max-width: 280px;
+            margin: 0 auto;
+            transform: rotate(-1.5deg);
+            padding: 7px 7px 32px;
+        }
+        .ps-hero .polaroid img {
+            aspect-ratio: 4/5;
+            object-fit: cover;
+        }
+
+        /* Pair row */
+        .ps-pair .polaroid:first-child {
+            transform: rotate(-2deg);
+        }
+        .ps-pair .polaroid:last-child {
+            transform: rotate(1.5deg);
+        }
+        .ps-pair .polaroid img {
+            aspect-ratio: 3/4;
+            object-fit: cover;
+        }
+
+        /* Triple row */
+        .ps-triple {
+            gap: 8px;
+        }
+        .ps-triple .polaroid:nth-child(1) {
+            transform: rotate(1deg);
+        }
+        .ps-triple .polaroid:nth-child(2) {
+            transform: rotate(-1.5deg);
+            margin-top: 10px;
+        }
+        .ps-triple .polaroid:nth-child(3) {
+            transform: rotate(2deg);
+        }
+        .ps-triple .polaroid img {
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+        .ps-triple .polaroid:first-child img {
+            transform: rotate(180deg);
+        }
+
+        /* Wide single */
+        .ps-wide {
+            margin-bottom: 14px;
+        }
+        .ps-wide .polaroid {
+            max-width: 340px;
+            margin: 0 auto;
+            transform: rotate(0.8deg);
+            padding: 6px 6px 30px;
+        }
+        .ps-wide .polaroid img {
+            aspect-ratio: 16/10;
+            object-fit: cover;
+        }
+
+        /* Bottom */
+        .bottom {
+            background: linear-gradient(180deg, #3d4f22, #2a3818);
+            color: #fff;
+            padding: 48px 28px 64px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .b-date {
+            font:
+                    400 clamp(1.6rem, 5.5vw, 2.6rem)/1 "Great Vibes",
+                    cursive;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .b-venue {
+            font:
+                    600 clamp(0.65rem, 1.5vw, 0.85rem)/1 "Cinzel",
+                    serif;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin: 8px 0 28px;
+        }
+        .b-div {
+            width: 32px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 20px auto;
+        }
+        .b-msg {
+            font:
+                    italic 400 clamp(0.85rem, 2.2vw, 1.05rem)/1.9 "Cormorant Garamond",
+                    serif;
+            color: rgba(255, 255, 255, 0.4);
+            max-width: 340px;
+            margin: 0 auto;
+        }
+        .b-love {
+            font:
+                    italic 600 1.2rem/1.4 "Cormorant Garamond",
+                    serif;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 20px;
+        }
+        .b-names {
+            font:
+                    400 clamp(1.4rem, 4.5vw, 2rem)/1 "Great Vibes",
+                    cursive;
+            color: #c8ac5a;
+            margin-top: 5px;
+        }
+        .b-reply {
+            font:
+                    italic 400 clamp(0.75rem, 2vw, 0.9rem)/1.6 "Cormorant Garamond",
+                    serif;
+            color: rgba(255, 255, 255, 0.35);
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .b-back {
+            margin-top: 28px;
+            padding: 9px 24px;
+            background: 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.25);
+            font:
+                    400 0.52rem/1 "Cinzel",
+                    serif;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .b-back:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* Kazakh Cyrillic — Great Vibes doesn't support ә, ө, ұ etc. */
+        html[lang="kk"] .c-for {
+            font-family: "Bad Script", cursive;
+        }
+        html[lang="kk"] .greet-name {
+            font-family: "Bad Script", cursive;
+        }
+        html[lang="kk"] .b-date {
+            font-family: "Bad Script", cursive;
+        }
+
+        @media (max-width: 380px) {
+            .card-outer {
+                width: 86%;
+            }
+            .card {
+                padding: 18px 14px 14px;
+            }
+            .open-env {
+                width: 98%;
+                margin-top: -100px;
+                aspect-ratio: 1.5/1;
+            }
+            .card-photo img {
+                width: 100px !important;
+            }
+            .vinyl-player {
+                width: 80px !important;
+                height: 80px !important;
+            }
+            .vinyl-btn {
+                width: 20px !important;
+                height: 20px !important;
+            }
+            .vinyl-btn .play-icon {
+                border-width: 3px 0 3px 5.5px !important;
+            }
+            .vinyl-btn .pause-icon span {
+                width: 2px !important;
+                height: 7px !important;
+            }
+            .c-ornament {
+                margin: 6px auto;
+            }
+            .c-for {
+                margin: 6px 0 2px;
+            }
+            .card-media {
+                margin-top: 8px;
+                gap: 5px;
+            }
+            .card-fl-tr {
+                width: 70px !important;
+                height: 70px !important;
+                top: -12px !important;
+                right: -8px !important;
+            }
+            .card-fl-bl {
+                width: 58px !important;
+                height: 58px !important;
+                bottom: -10px !important;
+                left: -8px !important;
+            }
+            .sc-fl-left {
+                left: -12px !important;
+                width: 70px !important;
+                height: 70px !important;
+            }
+            .sc-fl-bottom {
+                right: 6px !important;
+                width: 65px !important;
+                height: 65px !important;
+            }
+            .env-fl-tl {
+                top: -20px !important;
+                left: -14px !important;
+                width: 85px !important;
+                height: 85px !important;
+            }
+            .env-fl-br {
+                bottom: -18px !important;
+                right: -12px !important;
+                width: 80px !important;
+                height: 80px !important;
+            }
+            .photo-story {
+                padding: 0 12px !important;
+            }
+            .ps-hero .polaroid {
+                max-width: 240px;
+            }
+            .ps-wide .polaroid {
+                max-width: 280px;
+            }
+            .invitation-section {
+                padding: 0 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="lang">
+    <button onclick="sl('kk')" id="bk">QAZ</button>
+    <button class="on" onclick="sl('ru')" id="br">РУС</button>
+</div>
+
+<div class="page-wrap">
+    <!-- Initial centered view -->
+    <div class="initial-view" id="initialView">
+        <div class="greet" id="greet">
+            <div class="greet-name" id="g1"></div>
+            <div class="greet-sub" id="g2"></div>
+        </div>
+
+        <!-- ENVELOPE — click to open -->
+        <div class="env-container" id="envContainer" onclick="openEnvelope()">
+            <div class="envelope" id="envelope">
+                <div class="env-fl env-fl-tl">
+                    <img src="flowers-corner.png" alt="" />
+                </div>
+                <div class="env-fl env-fl-br">
+                    <img src="flowers-corner.png" alt="" />
+                </div>
+                <div class="env-body"></div>
+                <div class="env-flap" id="envFlap"></div>
+                <div class="env-fold-l"></div>
+                <div class="env-fold-r"></div>
+                <div class="env-fold-b"></div>
+                <div class="env-inner-card">
+                    <div class="env-pv">
+                        <div class="env-pv-tag" id="pt"></div>
+                        <div class="env-pv-names">Dias & Shapagat</div>
+                        <div class="env-pv-date">08 · 08 · 2026</div>
+                    </div>
+                </div>
+                <div class="env-seal" id="envSeal">
+                    <div class="wax-seal">
+                        <div class="wax-seal-letters">
+                            <div class="wax-seal-dm">
+                                <span class="wd">D</span><span class="wm">Sh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hint" id="hint"></div>
+        </div>
+    </div>
+    <!-- /initial-view -->
+
+    <!-- REVEALED CONTENT — shown after envelope opens -->
+    <div class="revealed" id="revealed">
+        <div class="composed" id="composed">
+            <!-- Card behind envelope -->
+            <div class="card-outer" id="cardOuter">
+                <div class="card">
+                    <div class="card-lace-l"></div>
+                    <div class="card-lace-r"></div>
+                    <div class="card-fl card-fl-tr">
+                        <img src="flowers-corner.png" alt="" />
+                    </div>
+                    <div class="card-fl card-fl-bl">
+                        <img src="flowers-single.png" alt="" />
+                    </div>
+
+                    <div class="c-for" id="cf"></div>
+                    <div class="c-ornament">
+                        <div class="c-orn-line"></div>
+                        <div class="c-orn-diamond"></div>
+                        <div class="c-orn-line"></div>
+                    </div>
+                    <div class="c-date" id="cd"></div>
+                    <div class="c-ornament">
+                        <div class="c-orn-line"></div>
+                        <div class="c-orn-diamond"></div>
+                        <div class="c-orn-line"></div>
+                    </div>
+                    <div class="c-names">
+                        Dias <span class="amp">&</span> Shapagat
+                    </div>
+
+                    <div class="card-media">
+                        <div class="card-photo">
+                            <img src="main.jpg" alt="" />
+                        </div>
+                        <div class="vinyl-wrap">
+                            <div class="vinyl-player" onclick="tm(event)">
+                                <div class="vinyl-disc" id="vd">
+                                    <canvas id="vinylCanvas"></canvas>
+                                    <div class="vinyl-center"></div>
+                                </div>
+                                <button class="vinyl-btn" id="vinylBtn" onclick="tm(event)">
+                                    <div class="play-icon"></div>
+                                    <div class="pause-icon"><span></span><span></span></div>
+                                </button>
+                                <div class="vinyl-svg-text">
+                                    <svg viewBox="0 0 116 116">
+                                        <defs>
+                                            <path
+                                                    id="vc"
+                                                    d="M58,58 m-49,0 a49,49 0 1,1 98,0 a49,49 0 1,1 -98,0"
+                                            />
+                                        </defs>
+                                        <text>
+                                            <textPath
+                                                    href="#vc"
+                                                    startOffset="0%"
+                                                    id="vt"
+                                            ></textPath>
+                                        </text>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Open envelope ON TOP of card bottom — no top triangle -->
+            <div class="open-env" id="openEnv">
+                <div class="oe-fold-l"></div>
+                <div class="oe-fold-r"></div>
+                <div class="oe-fold-b"></div>
+                <div class="oe-seal">
+                    <div class="wax-seal">
+                        <div class="wax-seal-letters">
+                            <div class="wax-seal-dm">
+                                <span class="wd">D</span><span class="wm">Sh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sc-fl sc-fl-left">
+                <img src="flowers-single.png" alt="" />
+            </div>
+            <div class="sc-fl sc-fl-bottom">
+                <img src="flowers-corner.png" alt="" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal invitation details -->
+    <div class="invitation-section" id="invSection" style="opacity: 0">
+        <div class="inv-ornament">
+            <div class="inv-orn-line"></div>
+            <div class="inv-orn-leaf">&#10047;</div>
+            <div class="inv-orn-line"></div>
+        </div>
+        <div class="inv-text" id="invText"></div>
+        <div class="inv-details">
+            <div class="inv-detail-row">
+                <div class="inv-detail-label" id="invDateLabel"></div>
+                <div class="inv-detail-value" id="invDateVal"></div>
+            </div>
+            <div class="inv-divider"></div>
+            <div class="inv-detail-row">
+                <div class="inv-detail-label" id="invPlaceLabel"></div>
+                <div class="inv-detail-value" id="invPlaceVal"></div>
+                <div class="inv-detail-sub" id="invPlaceSub"></div>
+                <a href="https://2gis.kz/shymkent/geo/70000001114311629/69.604522,42.360964" target="_blank" class="inv-venue-link" id="invVenueLink"></a>
+            </div>
+        </div>
+
+        <div class="inv-schedule" id="invSchedule">
+            <div class="inv-detail-label" id="scheduleLabel"></div>
+            <div class="schedule-items">
+                <div class="schedule-item"><span class="schedule-time">19:00</span><span class="schedule-desc" id="sch1"></span></div>
+                <div class="schedule-item"><span class="schedule-time">20:00</span><span class="schedule-desc" id="sch2"></span></div>
+            </div>
+            <div class="schedule-note" id="scheduleNote"></div>
+        </div>
+
+        <div class="bottom" id="bottom" style="opacity: 0">
+            <div class="b-date" id="bd"></div>
+            <div class="b-venue" id="bv"></div>
+            <div class="b-div"></div>
+            <div class="b-msg" id="bm"></div>
+            <div class="b-div"></div>
+            <div class="b-love" id="bl"></div>
+            <div class="b-names">Saltanat & Aiym azhe</div>
+            <div class="b-div"></div>
+            <div class="b-reply" id="breply"></div>
+            <button class="b-back" id="bb" onclick="resetEnvelope()"></button>
+        </div>
+    </div>
+
+    <audio id="au" loop preload="auto">
+        <source
+                src="Дос-Мұқасан - Той жыры.mp3"
+                type="audio/mpeg"
+        />
+    </audio>
+
+    <script>
+        function drawVinyl() {
+            const c = document.getElementById("vinylCanvas");
+            if (!c) return;
+            const s = 240;
+            c.width = s;
+            c.height = s;
+            const ctx = c.getContext("2d"),
+                cx = s / 2,
+                cy = s / 2;
+            ctx.beginPath();
+            ctx.arc(cx, cy, s / 2, 0, Math.PI * 2);
+            ctx.fillStyle = "#1a1a1a";
+            ctx.fill();
+            for (let r = 28; r < s / 2 - 3; r += 1.2) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.045 + 0.025})`;
+                ctx.lineWidth = 0.35 + Math.random() * 0.3;
+                ctx.stroke();
+            }
+            [40, 58, 76, 92].forEach((r) => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.strokeStyle = "rgba(255,255,255,0.065)";
+                ctx.lineWidth = 1.2;
+                ctx.stroke();
+            });
+            ctx.beginPath();
+            ctx.arc(cx, cy, 65, -0.7, 0.5);
+            ctx.strokeStyle = "rgba(255,255,255,0.05)";
+            ctx.lineWidth = 16;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(cx, cy, 48, -1.1, -0.1);
+            ctx.strokeStyle = "rgba(255,255,255,0.035)";
+            ctx.lineWidth = 10;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(cx, cy, s / 2 - 1, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(255,255,255,0.06)";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+
+        const P = new URLSearchParams(location.search);
+        const nR = P.get("name") || "",
+            pR = P.get("pronoun") || "";
+        const nK = P.get("name_kk") || nR,
+            pK = P.get("pronoun_kk") || "";
+        const G = { kk: { n: nK, p: pK }, ru: { n: nR, p: pR } };
+
+        const T = {
+            kk: {
+                d: "Құрметті қонағымыз",
+                sub: "Сізге хат келді",
+                hint: "Ашу үшін басыңыз",
+                pt: "Үйлену той",
+                cs: "Сізді тойымызға",
+                cthe: "Шақыруға қуаныштымыз!",
+                cd: "8 ТАМЫЗ 2026",
+                cf: "Үйлену той",
+                vt: "МУЗЫКАНЫ  ҚОСУ  •  МУЗЫКАНЫ  ҚОСУ  •  ",
+                invText:
+                    "Біздің өмір жолымызда ең маңызды адамдардың бірі - Сізсіз. Бірге күліп, бірге қуанып, бірге жүрген сәттеріміз баға жетпес. Сондықтан ең бақытты күнімізді дәл Сізбен бөліскіміз келеді.",
+                invDateLabel: "Күні",
+                invDateVal: "8 тамыз 2026, сенбі",
+                invPlaceLabel: "Орны",
+                invPlaceVal: "Mardan Hall, Шымкент",
+                invVenueLink: "2GIS-те ашу →",
+                scheduleLabel: "Күн тәртібі",
+                sch1: "Беташар",
+                sch2: "Той",
+                scheduleNote: "* Кесте шамамен, өзгерістер болуы мүмкін",
+                bd: "08 . 08 . 2026",
+                bv: "Шымкент",
+                bm: "Бұл күнді біз ұзақ армандадық. Ең жақын, ең қымбат адамдарымызбен бірге болғымыз келеді. Сіз - солардың бірісіз.",
+                bl: "Мәңгі сүйіспеншілікпен, той иелері",
+                bb: "← Конвертке оралу",
+                breply: "Жауабыңызды осы хабарламаға жеке хатта жаза аласыз",
+            },
+            ru: {
+                d: "Дорогой гость",
+                sub: "Вам пришло письмо",
+                hint: "Нажмите, чтобы открыть",
+                pt: "Свадьба",
+                cs: "Мы рады пригласить вас",
+                cthe: "На наш праздник!",
+                cd: "8 АВГУСТА 2026",
+                cf: "Свадьба",
+                vt: "ВКЛЮЧИТЬ  МУЗЫКУ  •  ВКЛЮЧИТЬ  МУЗЫКУ  •  ",
+                invText:
+                    "Вы - один из самых важных людей в нашей жизни. Все моменты, когда мы смеялись вместе, поддерживали друг друга и радовались - бесценны. Поэтому именно с вами мы хотим разделить наш самый счастливый день.",
+                invDateLabel: "Дата",
+                invDateVal: "8 августа 2026, суббота",
+                invPlaceLabel: "Место",
+                invPlaceVal: "Mardan Hall, Шымкент",
+                invVenueLink: "Открыть в 2GIS →",
+                scheduleLabel: "Расписание",
+                sch1: "Беташар",
+                sch2: "Той",
+                scheduleNote: "* Расписание примерное, возможны изменения",
+                bd: "08 . 08 . 2026",
+                bv: "Шымкент",
+                bm: "Мы давно мечтали об этом дне. Нам хочется провести его рядом с самыми близкими и дорогими людьми. Вы - один из них.",
+                bl: "С любовью навсегда,",
+                bb: "← Вернуться к конверту",
+                breply: "Ответ можете написать в личных сообщениях в ответе к данному сообщению",
+            },
+        };
+
+        let L = "kk",
+            playing = false,
+            isOpen = false;
+        const au = document.getElementById("au");
+
+        function sl(l) {
+            L = l;
+            document.documentElement.lang = l;
+            const t = T[l],
+                g = G[l];
+            t.invPlaceSub = undefined;
+            document
+                .querySelectorAll(".lang button")
+                .forEach((b) => b.classList.remove("on"));
+            document.getElementById(l === "kk" ? "bk" : "br").classList.add("on");
+            function nm(el) {
+                if (g.n && g.p) el.textContent = g.p + ", " + g.n + "!";
+                else if (g.n) el.textContent = g.n + "!";
+                else el.textContent = t.d;
+            }
+            nm(document.getElementById("g1"));
+            document.getElementById("g2").textContent = t.sub;
+            document.getElementById("hint").textContent = t.hint;
+            document.getElementById("pt").textContent = t.pt;
+            document.getElementById("cd").textContent = t.cd;
+            document.getElementById("cf").textContent = t.cf;
+            document.getElementById("vt").textContent = t.vt;
+            document.getElementById("invText").textContent = t.invText;
+            document.getElementById("invDateLabel").textContent = t.invDateLabel;
+            document.getElementById("invDateVal").textContent = t.invDateVal;
+            document.getElementById("invPlaceLabel").textContent = t.invPlaceLabel;
+            document.getElementById("invPlaceVal").textContent = t.invPlaceVal;
+            document.getElementById("invPlaceSub").textContent = t.invPlaceSub;
+            document.getElementById("invVenueLink").textContent = t.invVenueLink;
+            document.getElementById("scheduleLabel").textContent = t.scheduleLabel;
+            document.getElementById("sch1").textContent = t.sch1;
+            document.getElementById("sch2").textContent = t.sch2;
+            document.getElementById("scheduleNote").textContent = t.scheduleNote;
+            document.getElementById("bd").textContent = t.bd;
+            document.getElementById("bv").textContent = t.bv;
+            document.getElementById("bm").textContent = t.bm;
+            document.getElementById("bl").textContent = t.bl;
+            document.getElementById("bb").textContent = t.bb;
+            document.getElementById("breply").textContent = t.breply;
+        }
+
+        function introAnim() {
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+            tl.fromTo(
+                "#greet",
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.7 },
+                0.2,
+            )
+                .fromTo(
+                    ".envelope",
+                    { opacity: 0, y: 40, scale: 0.92 },
+                    { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power2.out" },
+                    0.5,
+                )
+                .fromTo(
+                    ".env-fl-tl",
+                    { opacity: 0, scale: 0.6, rotate: -25 },
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        rotate: -10,
+                        duration: 0.6,
+                        ease: "back.out(1.4)",
+                    },
+                    0.8,
+                )
+                .fromTo(
+                    ".env-fl-br",
+                    { opacity: 0, scale: 0.6, rotate: 185 },
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        rotate: 170,
+                        duration: 0.6,
+                        ease: "back.out(1.4)",
+                    },
+                    0.9,
+                )
+                .fromTo(
+                    "#hint",
+                    { opacity: 0, y: 6 },
+                    { opacity: 0.7, y: 0, duration: 0.5 },
+                    1.1,
+                );
+            gsap.to("#hint", {
+                opacity: 0.25,
+                duration: 1.8,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+                delay: 2,
+            });
+        }
+
+        function openEnvelope() {
+            if (isOpen) return;
+            isOpen = true;
+            gsap.killTweensOf("#hint");
+            drawVinyl();
+
+            const tl = gsap.timeline();
+            tl.to("#hint", { opacity: 0, duration: 0.15 }, 0)
+                .to(
+                    "#envFlap",
+                    { scaleY: -1, duration: 0.3, ease: "power2.inOut" },
+                    0,
+                )
+                .to(
+                    ["#envSeal", ".env-fl", "#greet"],
+                    { opacity: 0, duration: 0.2 },
+                    0.15,
+                )
+                .to(
+                    ".envelope",
+                    { opacity: 0, scale: 1.1, duration: 0.25, ease: "power2.in" },
+                    0.3,
+                )
+                .call(
+                    () => {
+                        document.getElementById("initialView").style.display = "none";
+                        document.documentElement.classList.remove("no-scroll");
+                        document.getElementById("revealed").classList.add("show");
+                        window.scrollTo(0, 0);
+                        revealScene();
+                    },
+                    null,
+                    0.55,
+                );
+        }
+
+        function revealScene() {
+            gsap.set("#cardOuter", { opacity: 0, y: 60, scale: 0.92 });
+            gsap.set("#openEnv", { opacity: 0, y: 30 });
+            gsap.set(".sc-fl-left", { opacity: 0, x: -20, scale: 0.75 });
+            gsap.set(".sc-fl-bottom", { opacity: 0, y: 15, scale: 0.75 });
+            gsap.set(".oe-seal", { opacity: 0, scale: 0.5 });
+            gsap.set(".card-fl", { opacity: 0, scale: 0.6 });
+            gsap.set(".card-media", { opacity: 0, y: 15 });
+            gsap.set(
+                [".c-for", ".c-ornament", ".c-date", ".c-names"],
+                { opacity: 0, y: 10 },
+            );
+
+            const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+            // Open envelope appears (wrapping card bottom)
+            tl.to("#openEnv", { opacity: 1, y: 0, duration: 0.45 }, 0)
+
+                // Card rises from behind
+                .to(
+                    "#cardOuter",
+                    { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out" },
+                    0.05,
+                )
+
+                // Seal pops
+                .to(
+                    ".oe-seal",
+                    { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" },
+                    0.3,
+                )
+
+                // Card content
+                .to(".c-for", { opacity: 1, y: 0, duration: 0.22 }, 0.25)
+                .to(".c-ornament", { opacity: 1, y: 0, duration: 0.18 }, 0.3)
+                .to(".c-date", { opacity: 1, y: 0, duration: 0.22 }, 0.33)
+                .to(".c-names", { opacity: 1, y: 0, duration: 0.22 }, 0.38)
+                .to(".card-media", { opacity: 1, y: 0, duration: 0.28 }, 0.44)
+
+                // Flowers
+                .to(
+                    ".card-fl",
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.28,
+                        ease: "back.out(1.5)",
+                        stagger: 0.04,
+                    },
+                    0.4,
+                )
+                .to(
+                    ".sc-fl-left",
+                    {
+                        opacity: 1,
+                        x: 0,
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "back.out(1.3)",
+                    },
+                    0.5,
+                )
+                .to(
+                    ".sc-fl-bottom",
+                    {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "back.out(1.3)",
+                    },
+                    0.55,
+                )
+
+                // Invitation section
+                .to("#invSection", { opacity: 1, y: 0, duration: 0.35 }, 0.6)
+
+                // Photo story + bottom
+                .to("#gallery", { opacity: 1, y: 0, duration: 0.3 }, 0.7)
+                .fromTo(
+                    ".polaroid",
+                    { y: 20, opacity: 0, scale: 0.95, rotation: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.35,
+                        stagger: 0.06,
+                        ease: "back.out(1.2)",
+                    },
+                    0.75,
+                )
+                .to("#bottom", { opacity: 1, duration: 0.3 }, 1.2);
+        }
+
+        function tm(e) {
+            e && e.stopPropagation();
+            const d = document.getElementById("vd");
+            const btn = document.getElementById("vinylBtn");
+            if (playing) {
+                au.pause();
+                d.classList.remove("spin");
+                btn.classList.remove("is-playing");
+            } else {
+                au.play();
+                d.classList.add("spin");
+                btn.classList.add("is-playing");
+            }
+            playing = !playing;
+        }
+
+        function resetEnvelope() {
+            isOpen = false;
+            playing = false;
+            au.pause();
+            document.getElementById("vd").classList.remove("spin");
+            document.getElementById("vinylBtn").classList.remove("is-playing");
+            document.getElementById("revealed").classList.remove("show");
+            document.getElementById("initialView").style.display = "";
+            document.documentElement.classList.add("no-scroll");
+            gsap.set("#invSection", { opacity: 0 });
+            gsap.set("#gallery", { opacity: 0 });
+            gsap.set("#bottom", { opacity: 0 });
+            gsap.set(".envelope", { opacity: 1, scale: 1, filter: "none" });
+            gsap.set("#envFlap", { scaleY: 1 });
+            gsap.set("#envSeal", { opacity: 1, scale: 1 });
+            gsap.set("#greet", { opacity: 1, y: 0 });
+            gsap.set(".env-fl-tl", { opacity: 1, scale: 1, rotate: -10 });
+            gsap.set(".env-fl-br", { opacity: 1, scale: 1, rotate: 170 });
+            gsap.set("#hint", { opacity: 0.7 });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            gsap.to("#hint", {
+                opacity: 0.25,
+                duration: 1.8,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+                delay: 1,
+            });
+        }
+
+        const isKk = pK === "Құрметті" || pR === "Құрметті";
+        sl( "kk" );
+        window.addEventListener("DOMContentLoaded", introAnim);
+    </script>
+</div>
+</body>
+</html>
+
